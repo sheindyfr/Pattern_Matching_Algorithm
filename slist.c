@@ -38,6 +38,7 @@ void slist_destroy(slist_t * l, slist_destroy_t flag)
 			free(slist_data(tmp));
 		free(tmp);
 	}
+	l = NULL;
 	free(l);
 }
 //----------------------------------------------------------
@@ -52,6 +53,7 @@ void *slist_pop_first(slist_t * l)
 		return NULL;
 	date_temp = tmp->data;
 	slist_head(l) = slist_next(slist_head(l));
+	if (slist_head(l) == NULL) slist_tail(l) = NULL;
 	free(tmp);
 	slist_size(l)--;
 	return date_temp;
@@ -96,6 +98,7 @@ int slist_prepend(slist_t * l, void *d)
 	slist_next(new_node) = slist_head(l);
 
 	slist_head(l) = new_node;
+	if (slist_tail(l) == NULL) slis_tail(l) = new_node;
 	slist_size(l)++;
 
 	return 0;
